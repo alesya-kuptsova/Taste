@@ -11,7 +11,7 @@ import SwiftUI
 struct TasteApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WishlistView()
         }
     }
 }
