@@ -36,8 +36,8 @@ struct WishlistView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddItem) {
-                AddItemView { title in
-                    viewModel.addMovie(title: title)
+                AddItemView { text in
+                    viewModel.addItem(title: text)
                 }
             }
         }

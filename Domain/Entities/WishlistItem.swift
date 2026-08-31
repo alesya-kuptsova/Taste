@@ -13,6 +13,7 @@ enum WishlistItemType: String, Codable {
     case music
     case place
     case product
+    case wish
 }
 
 struct WishlistItem: Identifiable, Hashable {

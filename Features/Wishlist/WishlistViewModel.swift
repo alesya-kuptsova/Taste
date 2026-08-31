@@ -37,9 +37,9 @@ final class WishlistViewModel {
         )
     ]
 
-    func addMovie(title: String) {
+    func addItem(title: String, type: WishlistItemType = .wish) {
         let newItem = WishlistItem(
-            type: .movie,
+            type: type,
             title: title
         )
 

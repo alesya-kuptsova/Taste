@@ -13,7 +13,7 @@ struct AddItemView: View {
     @State private var input = ""
     @State private var errorMessage: String?
 
-    let onAddMovie: (String) -> Void
+    let onAddItem: (String) -> Void
 
     var body: some View {
         NavigationStack {
@@ -66,8 +66,8 @@ struct AddItemView: View {
         }
 
         switch importInput {
-        case .text(let title):
-            onAddMovie(title)
+        case .text(let text):
+            onAddItem(text)
             dismiss()
 
         case .url:
