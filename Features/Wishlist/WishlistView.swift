@@ -10,6 +10,7 @@ import SwiftUI
 struct WishlistView: View {
 
     @State private var viewModel = WishlistViewModel()
+    @State private var isShowingAddItem = false
 
     var body: some View {
         NavigationStack {
@@ -28,10 +29,15 @@ struct WishlistView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        print("Add tapped")
+                        isShowingAddItem = true
                     } label: {
                         Image(systemName: "plus")
                     }
+                }
+            }
+            .sheet(isPresented: $isShowingAddItem) {
+                AddItemView { title in
+                    viewModel.addMovie(title: title)
                 }
             }
         }

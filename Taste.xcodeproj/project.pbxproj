@@ -13,6 +13,8 @@
 		F9EE6756304484F80023EC2B /* WishlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D7CA793043B0540076636B /* WishlistViewModel.swift */; };
 		F9EE67593044857D0023EC2B /* WishlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D7CA783043B0170076636B /* WishlistItem.swift */; };
 		F9EE675C30448F790023EC2B /* AppDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE675B30448EF10023EC2B /* AppDesign.swift */; };
+		F9EE675E3045CD8F0023EC2B /* ImportInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE675D3045CD820023EC2B /* ImportInput.swift */; };
+		F9EE67603045CF800023EC2B /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE675F3045CF7B0023EC2B /* AddItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		F9EE674E304480BB0023EC2B /* MovieCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCardView.swift; sourceTree = "<group>"; };
 		F9EE674F304480F30023EC2B /* WishlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistView.swift; sourceTree = "<group>"; };
 		F9EE675B30448EF10023EC2B /* AppDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDesign.swift; sourceTree = "<group>"; };
+		F9EE675D3045CD820023EC2B /* ImportInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportInput.swift; sourceTree = "<group>"; };
+		F9EE675F3045CF7B0023EC2B /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -179,6 +183,7 @@
 		F9D7CA6D3043A4690076636B /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				F9EE675D3045CD820023EC2B /* ImportInput.swift */,
 				F9D7CA783043B0170076636B /* WishlistItem.swift */,
 			);
 			path = Entities;
@@ -239,6 +244,7 @@
 		F9D7CA753043A5180076636B /* Import */ = {
 			isa = PBXGroup;
 			children = (
+				F9EE675F3045CF7B0023EC2B /* AddItemView.swift */,
 			);
 			path = Import;
 			sourceTree = "<group>";
@@ -401,12 +407,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9EE67603045CF800023EC2B /* AddItemView.swift in Sources */,
 				F9EE6756304484F80023EC2B /* WishlistViewModel.swift in Sources */,
 				F9EE675C30448F790023EC2B /* AppDesign.swift in Sources */,
 				F9EE67503044842E0023EC2B /* WishlistView.swift in Sources */,
 				F9EE67593044857D0023EC2B /* WishlistItem.swift in Sources */,
 				F9D7CA3F30439E270076636B /* TasteApp.swift in Sources */,
 				F9EE6753304484F00023EC2B /* MovieCardView.swift in Sources */,
+				F9EE675E3045CD8F0023EC2B /* ImportInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

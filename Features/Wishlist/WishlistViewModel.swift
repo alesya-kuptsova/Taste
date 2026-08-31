@@ -36,4 +36,13 @@ final class WishlistViewModel {
             imageName: "poster-mulholland"
         )
     ]
+
+    func addMovie(title: String) {
+        let newItem = WishlistItem(
+            type: .movie,
+            title: title
+        )
+
+        items.insert(newItem, at: 0)
+    }
 }
