@@ -4,6 +4,7 @@
 //
 //  Created by Alesya on 30.08.2026.
 //
+
 import Foundation
 import Observation
 
@@ -37,12 +38,13 @@ final class WishlistViewModel {
         )
     ]
 
-    func addItem(title: String, type: WishlistItemType = .wish) {
-        let newItem = WishlistItem(
-            type: type,
-            title: title
+    func addItem(from candidate: ItemCandidate) {
+        let item = WishlistItem(
+            type: candidate.type,
+            title: candidate.title,
+            year: candidate.year
         )
 
-        items.insert(newItem, at: 0)
+        items.insert(item, at: 0)
     }
 }

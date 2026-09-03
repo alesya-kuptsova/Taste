@@ -12,43 +12,68 @@ struct AddItemView: View {
 
     @State private var input = ""
     @State private var errorMessage: String?
+    @State private var candidate: ItemCandidate?
+    @State private var isAnalyzing = false
+    
+    private let analyzer: ContentAnalyzer = MockContentAnalyzer()
 
-    let onAddItem: (String) -> Void
+    let onAddItem: (ItemCandidate) -> Void
 
-    var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading, spacing: AppSpacing.lg) {
-                VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                    Text("What do you want to save?")
-                        .font(.title2.bold())
+    private var inputForm: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.lg) {
+            VStack(alignment: .leading, spacing: AppSpacing.sm) {
+                Text("What do you want to save?")
+                    .font(.title2.bold())
 
-                    Text("Enter a movie title or paste a link.")
-                        .foregroundStyle(.secondary)
+                Text("Enter a title, description or paste a link.")
+                    .foregroundStyle(.secondary)
+            }
+
+            TextField("Title, description or link", text: $input)
+                .textFieldStyle(.roundedBorder)
+
+            if let errorMessage {
+                Text(errorMessage)
+                    .font(.subheadline)
+                    .foregroundStyle(.red)
+            }
+
+            Button {
+                Task {
+                    await analyzeInput()
                 }
-
-                TextField("Movie title or link", text: $input)
-                    .textFieldStyle(.roundedBorder)
-
-                if let errorMessage {
-                    Text(errorMessage)
-                        .font(.subheadline)
-                        .foregroundStyle(.red)
-                }
-
-                Button {
-                    handleInput()
-                } label: {
+            } label: {
+                if isAnalyzing {
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                } else {
                     Text("Continue")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(
-                    input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                )
-
-                Spacer()
             }
-            .padding(AppSpacing.lg)
+            .buttonStyle(.borderedProminent)
+            .disabled(
+                isAnalyzing ||
+                input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            )
+
+            Spacer()
+        }
+        .padding(AppSpacing.lg)
+    }
+    
+    var body: some View {
+        NavigationStack {
+            Group {
+                if let candidate {
+                    CandidateResultView(candidate: candidate) {
+                        onAddItem(candidate)
+                        dismiss()
+                    }
+                } else {
+                    inputForm
+                }
+            }
             .navigationTitle("Add to Taste")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -60,18 +85,23 @@ struct AddItemView: View {
         }
     }
 
-    private func handleInput() {
+    @MainActor
+    private func analyzeInput() async {
         guard let importInput = ImportInput(rawValue: input) else {
             return
         }
 
-        switch importInput {
-        case .text(let text):
-            onAddItem(text)
-            dismiss()
+        isAnalyzing = true
+        errorMessage = nil
 
-        case .url:
-            errorMessage = "Link import is not available yet."
+        do {
+            let candidates = try await analyzer.analyze(importInput)
+
+            candidate = candidates.first
+        } catch {
+            errorMessage = "Could not analyze this item."
         }
+
+        isAnalyzing = false
     }
 }

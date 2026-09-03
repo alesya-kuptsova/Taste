@@ -4,6 +4,7 @@
 //
 //  Created by Alesya on 30.08.2026.
 //
+
 import Foundation
 
 enum WishlistItemType: String, Codable {
@@ -13,7 +14,7 @@ enum WishlistItemType: String, Codable {
     case music
     case place
     case product
-    case wish
+    case freeform
 }
 
 struct WishlistItem: Identifiable, Hashable {
