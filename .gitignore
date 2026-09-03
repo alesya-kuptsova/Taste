@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# Swift
+.build/
+
+# .NET
+bin/
+obj/
+
+# IDE
+.vs/
+.idea/
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
