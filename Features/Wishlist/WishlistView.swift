@@ -36,7 +36,11 @@ struct WishlistView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddItem) {
-                AddItemView { candidate in
+                AddItemView(
+                    analyzer: RemoteContentAnalyzer(
+                        baseURL: URL(string: "https://localhost:7077")!
+                    )
+                ) { candidate in
                     viewModel.addItem(from: candidate)
                 }
             }

@@ -19,6 +19,7 @@
 		F9EE6764304618A50023EC2B /* ContentAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE6763304618A10023EC2B /* ContentAnalyzer.swift */; };
 		F9EE6766304618D80023EC2B /* MockContentAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE6765304618D10023EC2B /* MockContentAnalyzer.swift */; };
 		F9EE676830461A750023EC2B /* CandidateResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE676730461A6A0023EC2B /* CandidateResultView.swift */; };
+		F9EE676A304A57C10023EC2B /* RemoteContentAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE6769304A50E50023EC2B /* RemoteContentAnalyzer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		F9EE6763304618A10023EC2B /* ContentAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentAnalyzer.swift; sourceTree = "<group>"; };
 		F9EE6765304618D10023EC2B /* MockContentAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockContentAnalyzer.swift; sourceTree = "<group>"; };
 		F9EE676730461A6A0023EC2B /* CandidateResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateResultView.swift; sourceTree = "<group>"; };
+		F9EE6769304A50E50023EC2B /* RemoteContentAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteContentAnalyzer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -238,6 +240,7 @@
 		F9D7CA733043A4ED0076636B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F9EE6769304A50E50023EC2B /* RemoteContentAnalyzer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				F9EE67603045CF800023EC2B /* AddItemView.swift in Sources */,
 				F9EE6756304484F80023EC2B /* WishlistViewModel.swift in Sources */,
 				F9EE675C30448F790023EC2B /* AppDesign.swift in Sources */,
+				F9EE676A304A57C10023EC2B /* RemoteContentAnalyzer.swift in Sources */,
 				F9EE67623046183B0023EC2B /* ItemCandidate.swift in Sources */,
 				F9EE67503044842E0023EC2B /* WishlistView.swift in Sources */,
 				F9EE6766304618D80023EC2B /* MockContentAnalyzer.swift in Sources */,
@@ -586,7 +590,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -628,7 +642,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

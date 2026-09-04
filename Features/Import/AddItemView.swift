@@ -15,9 +15,17 @@ struct AddItemView: View {
     @State private var candidate: ItemCandidate?
     @State private var isAnalyzing = false
     
-    private let analyzer: ContentAnalyzer = MockContentAnalyzer()
+    private let analyzer: ContentAnalyzer
 
     let onAddItem: (ItemCandidate) -> Void
+    
+    init(
+        analyzer: ContentAnalyzer,
+        onAddItem: @escaping (ItemCandidate) -> Void
+    ) {
+        self.analyzer = analyzer
+        self.onAddItem = onAddItem
+    }
 
     private var inputForm: some View {
         VStack(alignment: .leading, spacing: AppSpacing.lg) {
@@ -99,7 +107,8 @@ struct AddItemView: View {
 
             candidate = candidates.first
         } catch {
-            errorMessage = "Could not analyze this item."
+            print("Analyze error:", error)
+            errorMessage = "Could not analyze this item: \(error.localizedDescription)"
         }
 
         isAnalyzing = false
