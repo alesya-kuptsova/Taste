@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Taste.Api.Models;
+using Taste.Api.Services;
 
 namespace Taste.Api.Controllers;
 
@@ -7,38 +8,30 @@ namespace Taste.Api.Controllers;
 [Route("api/[controller]")]
 public sealed class AnalyzeController : ControllerBase
 {
+    private readonly IContentAnalyzer _contentAnalyzer;
+
+    public AnalyzeController(IContentAnalyzer contentAnalyzer)
+    {
+        _contentAnalyzer = contentAnalyzer;
+    }
+
     [HttpPost]
-    public ActionResult<AnalyzeResponse> Analyze(AnalyzeRequest request)
+    public async Task<ActionResult<AnalyzeResponse>> Analyze(
+        AnalyzeRequest request,
+        CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Input))
         {
             return BadRequest("Input cannot be empty.");
         }
 
-        ItemCandidateDto candidate;
-
-        if (request.Input.Contains(
-                "oldboy",
-                StringComparison.OrdinalIgnoreCase))
-        {
-            candidate = new ItemCandidateDto(
-                Type: "movie",
-                Title: "Oldboy",
-                Year: 2003
-            );
-        }
-        else
-        {
-            candidate = new ItemCandidateDto(
-                Type: "freeform",
-                Title: request.Input
-            );
-        }
+        var candidates = await _contentAnalyzer.AnalyzeAsync(
+            request.Input,
+            cancellationToken
+        );
 
         return Ok(
-            new AnalyzeResponse(
-                Candidates: new[] { candidate }
-            )
+            new AnalyzeResponse(candidates)
         );
     }
 }
