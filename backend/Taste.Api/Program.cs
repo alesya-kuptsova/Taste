@@ -8,6 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddHttpClient<IContentAnalyzer, OpenAIContentAnalyzer>();
+builder.Services.AddHttpClient<ILinkContentExtractor, LinkContentExtractor>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

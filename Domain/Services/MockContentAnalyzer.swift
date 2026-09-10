@@ -33,7 +33,14 @@ final class MockContentAnalyzer: ContentAnalyzer {
                 ItemCandidate(
                     type: .movie,
                     title: "Oldboy",
-                    year: 2003
+                    details: ItemDetails(
+                        year: 2003,
+                        author: nil,
+                        location: nil,
+                        mapQuery: nil,
+                        imageURL: nil,
+                        externalURL: nil
+                    )
                 )
             ]
         }

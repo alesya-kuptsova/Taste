@@ -50,12 +50,22 @@ final class RemoteContentAnalyzer: ContentAnalyzer {
             AnalyzeResponse.self,
             from: data
         )
-
         return result.candidates.map {
             ItemCandidate(
                 type: WishlistItemType(rawValue: $0.type) ?? .freeform,
                 title: $0.title,
-                year: $0.year
+                description: $0.description,
+                sourceURL: $0.sourceUrl.flatMap(URL.init(string:)),
+                details: $0.details.map {
+                    ItemDetails(
+                        year: $0.year,
+                        author: $0.author,
+                        location: $0.location,
+                        mapQuery: $0.mapQuery,
+                        imageURL: $0.imageUrl.flatMap(URL.init(string:)),
+                        externalURL: $0.externalUrl.flatMap(URL.init(string:))
+                    )
+                }
             )
         }
     }
@@ -72,7 +82,18 @@ private struct AnalyzeResponse: Decodable {
 private struct ItemCandidateDTO: Decodable {
     let type: String
     let title: String
+    let description: String?
+    let sourceUrl: String?
+    let details: ItemDetailsDTO?
+}
+
+private struct ItemDetailsDTO: Decodable {
     let year: Int?
+    let author: String?
+    let location: String?
+    let mapQuery: String?
+    let imageUrl: String?
+    let externalUrl: String?
 }
 
 private enum RemoteContentAnalyzerError: Error {

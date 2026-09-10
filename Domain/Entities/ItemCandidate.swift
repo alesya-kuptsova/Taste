@@ -9,17 +9,24 @@ import Foundation
 
 struct ItemCandidate: Identifiable, Hashable {
     let id = UUID()
+
     let type: WishlistItemType
     let title: String
-    let year: Int?
+    let description: String?
+    let sourceURL: URL?
+    let details: ItemDetails?
 
     init(
         type: WishlistItemType,
         title: String,
-        year: Int? = nil
+        description: String? = nil,
+        sourceURL: URL? = nil,
+        details: ItemDetails? = nil
     ) {
         self.type = type
         self.title = title
-        self.year = year
+        self.description = description
+        self.sourceURL = sourceURL
+        self.details = details
     }
 }

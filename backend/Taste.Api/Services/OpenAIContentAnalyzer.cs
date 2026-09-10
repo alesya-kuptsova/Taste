@@ -72,51 +72,106 @@ public sealed class OpenAIContentAnalyzer : IContentAnalyzer
                         type = "object",
                         properties = new
                         {
-                            candidates = new
-                            {
-                                type = "array",
+                            candidates = new 
+                            { 
+                                type = "array", 
                                 maxItems = 5,
-
-                                items = new
-                                {
+                                items = new 
+                                { 
                                     type = "object",
-                                    properties = new
-                                    {
-                                        type = new
-                                        {
-                                            type = "string",
-                                            @enum = new[]
-                                            {
-                                                "movie",
-                                                "book",
-                                                "game",
-                                                "music",
-                                                "place",
-                                                "product",
-                                                "freeform"
-                                            }
+                                    properties = new 
+                                    { 
+                                        type = new 
+                                        { 
+                                            type = "string", 
+                                            @enum = new[] 
+                                            { 
+                                                "movie", 
+                                                "book", 
+                                                "game", 
+                                                "music", 
+                                                "place", 
+                                                "product", 
+                                                "freeform" 
+                                            } 
                                         },
-
-                                        title = new
-                                        {
-                                            type = "string"
+                                        
+                                        title = new 
+                                        { 
+                                            type = "string" 
                                         },
-
-                                        year = new
-                                        {
-                                            type = new[] { "integer", "null" }
-                                        }
+                                        
+                                        description = new 
+                                        { 
+                                            type = new[] { "string", "null" } 
+                                        },
+                                        
+                                        sourceUrl = new 
+                                        { 
+                                            type = new[] { "string", "null" } 
+                                        },
+                                        
+                                        details = new 
+                                        { 
+                                            type = new[] { "object", "null" },
+                                            
+                                            properties = new 
+                                            { 
+                                                year = new 
+                                                { 
+                                                    type = new[] { "integer", "null" } 
+                                                },
+                                                
+                                                author = new 
+                                                { 
+                                                    type = new[] { "string", "null" } 
+                                                },
+                                                
+                                                location = new 
+                                                { 
+                                                    type = new[] { "string", "null" } 
+                                                },
+                                                
+                                                mapQuery = new 
+                                                { 
+                                                    type = new[] { "string", "null" } 
+                                                },
+                                                
+                                                imageUrl = new 
+                                                { 
+                                                    type = new[] { "string", "null" } 
+                                                },
+                                                
+                                                externalUrl = new 
+                                                { 
+                                                    type = new[] { "string", "null" } 
+                                                } 
+                                            },
+                                            
+                                            required = new[] 
+                                            { 
+                                                "year", 
+                                                "author", 
+                                                "location", 
+                                                "mapQuery", 
+                                                "imageUrl", 
+                                                "externalUrl" 
+                                            },
+                                            
+                                            additionalProperties = false 
+                                        } 
                                     },
-
-                                    required = new[]
-                                    {
-                                        "type",
-                                        "title",
-                                        "year"
-                                    },
-
-                                    additionalProperties = false
-                                }
+                                    
+                                    required = new[] 
+                                    { 
+                                        "type", 
+                                        "title", 
+                                        "description", 
+                                        "sourceUrl", 
+                                        "details" 
+                                    }, 
+                                    additionalProperties = false 
+                                } 
                             }
                         },
 

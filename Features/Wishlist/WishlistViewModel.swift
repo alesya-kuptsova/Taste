@@ -42,7 +42,7 @@ final class WishlistViewModel {
         let item = WishlistItem(
             type: candidate.type,
             title: candidate.title,
-            year: candidate.year
+            year: candidate.details?.year
         )
 
         items.insert(item, at: 0)

@@ -24,11 +24,21 @@ struct CandidateResultView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
-                if let year = candidate.year {
-                    Text(String(year))
+                if let description = candidate.description {
+                    Text(description)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
+                HStack(spacing: 6) {
+                    Text(candidate.type.rawValue.capitalized)
+
+                    if let year = candidate.details?.year {
+                        Text("•")
+                        Text(String(year))
+                    }
+                }
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
             }
 
             Button {

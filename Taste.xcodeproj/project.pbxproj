@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9B097FD3053602400A6DCB9 /* ItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */; };
 		F9D7CA3F30439E270076636B /* TasteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D7CA3E30439E270076636B /* TasteApp.swift */; };
 		F9EE67503044842E0023EC2B /* WishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE674F304480F30023EC2B /* WishlistView.swift */; };
 		F9EE6753304484F00023EC2B /* MovieCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE674E304480BB0023EC2B /* MovieCardView.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetails.swift; sourceTree = "<group>"; };
 		F9D7CA3B30439E270076636B /* Taste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D7CA3E30439E270076636B /* TasteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasteApp.swift; sourceTree = "<group>"; };
 		F9D7CA4830439E2A0076636B /* TasteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TasteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +195,7 @@
 		F9D7CA6D3043A4690076636B /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */,
 				F9EE6761304618360023EC2B /* ItemCandidate.swift */,
 				F9EE675D3045CD820023EC2B /* ImportInput.swift */,
 				F9D7CA783043B0170076636B /* WishlistItem.swift */,
@@ -433,6 +436,7 @@
 				F9EE676830461A750023EC2B /* CandidateResultView.swift in Sources */,
 				F9EE67593044857D0023EC2B /* WishlistItem.swift in Sources */,
 				F9D7CA3F30439E270076636B /* TasteApp.swift in Sources */,
+				F9B097FD3053602400A6DCB9 /* ItemDetails.swift in Sources */,
 				F9EE6753304484F00023EC2B /* MovieCardView.swift in Sources */,
 				F9EE675E3045CD8F0023EC2B /* ImportInput.swift in Sources */,
 			);

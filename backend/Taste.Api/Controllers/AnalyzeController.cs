@@ -9,10 +9,14 @@ namespace Taste.Api.Controllers;
 public sealed class AnalyzeController : ControllerBase
 {
     private readonly IContentAnalyzer _contentAnalyzer;
+    private readonly ILinkContentExtractor _linkContentExtractor;
 
-    public AnalyzeController(IContentAnalyzer contentAnalyzer)
+    public AnalyzeController(
+        IContentAnalyzer contentAnalyzer,
+        ILinkContentExtractor linkContentExtractor)
     {
         _contentAnalyzer = contentAnalyzer;
+        _linkContentExtractor = linkContentExtractor;
     }
 
     [HttpPost]
@@ -25,8 +29,18 @@ public sealed class AnalyzeController : ControllerBase
             return BadRequest("Input cannot be empty.");
         }
 
+        var inputForAnalysis = request.Input;
+
+        if (Uri.TryCreate(request.Input, UriKind.Absolute, out var url))
+        {
+            inputForAnalysis = await _linkContentExtractor.ExtractAsync(
+                url,
+                cancellationToken
+            );
+        }
+
         var candidates = await _contentAnalyzer.AnalyzeAsync(
-            request.Input,
+            inputForAnalysis,
             cancellationToken
         );
 
