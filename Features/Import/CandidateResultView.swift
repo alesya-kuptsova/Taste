@@ -29,6 +29,24 @@ struct CandidateResultView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
+
+                if candidate.type == .place,
+                   let latitude = candidate.details?.latitude,
+                   let longitude = candidate.details?.longitude {
+
+                    let title = candidate.title
+                        .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                        ?? candidate.title
+
+                    if let mapsURL = URL(
+                        string: "https://maps.apple.com/?ll=\(latitude),\(longitude)&q=\(title)"
+                    ) {
+                        Link(destination: mapsURL) {
+                            Label("Open in Maps", systemImage: "map")
+                        }
+                    }
+                }
+
                 HStack(spacing: 6) {
                     Text(candidate.type.rawValue.capitalized)
 

@@ -10,13 +10,16 @@ public sealed class AnalyzeController : ControllerBase
 {
     private readonly IContentAnalyzer _contentAnalyzer;
     private readonly ILinkContentExtractor _linkContentExtractor;
+    private readonly IPlaceResolver _placeResolver;
 
     public AnalyzeController(
         IContentAnalyzer contentAnalyzer,
-        ILinkContentExtractor linkContentExtractor)
+        ILinkContentExtractor linkContentExtractor,
+        IPlaceResolver placeResolver)
     {
         _contentAnalyzer = contentAnalyzer;
         _linkContentExtractor = linkContentExtractor;
+        _placeResolver = placeResolver;
     }
 
     [HttpPost]
@@ -44,8 +47,45 @@ public sealed class AnalyzeController : ControllerBase
             cancellationToken
         );
 
+        var enrichedCandidates = new List<ItemCandidateDto>();
+
+        foreach (var candidate in candidates)
+        {
+            if (candidate.Type == "place" &&
+                candidate.Details?.MapQuery is { Length: > 0 } mapQuery)
+            {
+                var resolvedPlace = await _placeResolver.ResolveAsync(
+                    mapQuery,
+                    cancellationToken
+                );
+
+                if (resolvedPlace is not null)
+                {
+                    var updatedDetails = candidate.Details with
+                    {
+                        Latitude = resolvedPlace.Latitude,
+                        Longitude = resolvedPlace.Longitude,
+                        FormattedAddress = resolvedPlace.FormattedAddress,
+                        ExternalPlaceId = resolvedPlace.ExternalPlaceId,
+                        ExternalUrl = resolvedPlace.ExternalUrl
+                    };
+
+                    enrichedCandidates.Add(
+                        candidate with
+                        {
+                            Details = updatedDetails
+                        }
+                    );
+
+                    continue;
+                }
+            }
+
+            enrichedCandidates.Add(candidate);
+        }
+        
         return Ok(
-            new AnalyzeResponse(candidates)
+            new AnalyzeResponse(enrichedCandidates)
         );
     }
 }

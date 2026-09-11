@@ -9,6 +9,14 @@ builder.Services.AddControllers();
 
 builder.Services.AddHttpClient<IContentAnalyzer, OpenAIContentAnalyzer>();
 builder.Services.AddHttpClient<ILinkContentExtractor, LinkContentExtractor>();
+builder.Services.AddHttpClient<IPlaceResolver, NominatimPlaceResolver>(client =>
+{
+    client.BaseAddress = new Uri("https://nominatim.openstreetmap.org/");
+    client.DefaultRequestHeaders.UserAgent.ParseAdd(
+        "Taste/1.0 (personal wishlist app)"
+    );
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

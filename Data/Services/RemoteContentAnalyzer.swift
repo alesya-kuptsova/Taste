@@ -62,6 +62,10 @@ final class RemoteContentAnalyzer: ContentAnalyzer {
                         author: $0.author,
                         location: $0.location,
                         mapQuery: $0.mapQuery,
+                        latitude: $0.latitude,
+                        longitude: $0.longitude,
+                        formattedAddress: $0.formattedAddress,
+                        externalPlaceID: $0.externalPlaceId,
                         imageURL: $0.imageUrl.flatMap(URL.init(string:)),
                         externalURL: $0.externalUrl.flatMap(URL.init(string:))
                     )
@@ -92,6 +96,12 @@ private struct ItemDetailsDTO: Decodable {
     let author: String?
     let location: String?
     let mapQuery: String?
+
+    let latitude: Double?
+    let longitude: Double?
+    let formattedAddress: String?
+    let externalPlaceId: String?
+
     let imageUrl: String?
     let externalUrl: String?
 }
