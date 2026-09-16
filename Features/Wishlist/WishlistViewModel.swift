@@ -11,6 +11,7 @@ import Observation
 @Observable
 final class WishlistViewModel {
 
+    //test
     var items: [WishlistItem] = [
         WishlistItem(
             type: .movie,
@@ -42,7 +43,8 @@ final class WishlistViewModel {
         let item = WishlistItem(
             type: candidate.type,
             title: candidate.title,
-            year: candidate.details?.year
+            year: candidate.details?.year,
+            imageURL: candidate.details?.imageURL
         )
 
         items.insert(item, at: 0)

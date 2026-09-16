@@ -24,6 +24,32 @@ struct CandidateResultView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
+                if let imageURL = candidate.details?.imageURL {
+                    AsyncImage(url: imageURL) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .frame(height: 220)
+
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: .infinity, maxHeight: 220)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+
+                        case .failure:
+                            Image(systemName: "photo")
+                                .font(.largeTitle)
+                                .foregroundStyle(.secondary)
+                                .frame(height: 120)
+
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                }
+                
                 if let description = candidate.description {
                     Text(description)
                         .font(.subheadline)

@@ -34,7 +34,27 @@ struct MovieCardView: View {
 
     @ViewBuilder
     private var poster: some View {
-        if let imageName = item.imageName {
+        if let imageURL = item.imageURL {
+            AsyncImage(url: imageURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(
+                            width: AppSize.posterWidth,
+                            height: AppSize.posterHeight
+                        )
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: AppRadius.card)
+                        )
+
+                default:
+                    placeholder
+                }
+            }
+
+        } else if let imageName = item.imageName {
             Image(imageName)
                 .resizable()
                 .scaledToFill()
@@ -45,18 +65,23 @@ struct MovieCardView: View {
                 .clipShape(
                     RoundedRectangle(cornerRadius: AppRadius.card)
                 )
+
         } else {
-            RoundedRectangle(cornerRadius: AppRadius.card)
-                .fill(AppColors.cardBackground)
-                .frame(
-                    width: AppSize.posterWidth,
-                    height: AppSize.posterHeight
-                )
-                .overlay {
-                    Image(systemName: "film")
-                        .font(.largeTitle)
-                        .foregroundStyle(.secondary)
-                }
+            placeholder
         }
+    }
+
+    private var placeholder: some View {
+        RoundedRectangle(cornerRadius: AppRadius.card)
+            .fill(AppColors.cardBackground)
+            .frame(
+                width: AppSize.posterWidth,
+                height: AppSize.posterHeight
+            )
+            .overlay {
+                Image(systemName: "photo")
+                    .font(.largeTitle)
+                    .foregroundStyle(.secondary)
+            }
     }
 }

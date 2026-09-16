@@ -9,16 +9,16 @@ namespace Taste.Api.Controllers;
 public sealed class AnalyzeController : ControllerBase
 {
     private readonly IContentAnalyzer _contentAnalyzer;
-    private readonly ILinkContentExtractor _linkContentExtractor;
+    private readonly IUrlContentResolver _urlContentResolver;
     private readonly IPlaceResolver _placeResolver;
 
     public AnalyzeController(
         IContentAnalyzer contentAnalyzer,
-        ILinkContentExtractor linkContentExtractor,
+        IUrlContentResolver urlContentResolver,
         IPlaceResolver placeResolver)
     {
         _contentAnalyzer = contentAnalyzer;
-        _linkContentExtractor = linkContentExtractor;
+        _urlContentResolver = urlContentResolver;
         _placeResolver = placeResolver;
     }
 
@@ -36,11 +36,22 @@ public sealed class AnalyzeController : ControllerBase
 
         if (Uri.TryCreate(request.Input, UriKind.Absolute, out var url))
         {
-            inputForAnalysis = await _linkContentExtractor.ExtractAsync(
+            var metadata = await _urlContentResolver.ResolveAsync(
                 url,
                 cancellationToken
             );
+
+            if (metadata is not null)
+            {
+                inputForAnalysis =
+                    $"The user saved this URL:\n{metadata.Url}\n\n" +
+                    $"Page title:\n{metadata.Title ?? "Unknown"}\n\n" +
+                    $"Page description:\n{metadata.Description ?? "Unknown"}\n\n" +
+                    $"Site:\n{metadata.SiteName ?? "Unknown"}\n\n" +
+                    $"Page image:\n{metadata.ImageUrl ?? "Unknown"}";
+            }
         }
+        
 
         var candidates = await _contentAnalyzer.AnalyzeAsync(
             inputForAnalysis,

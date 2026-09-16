@@ -23,18 +23,21 @@ struct WishlistItem: Identifiable, Hashable {
     let title: String
     let year: Int?
     let imageName: String?
+    let imageURL: URL?
 
     init(
         id: UUID = UUID(),
         type: WishlistItemType,
         title: String,
         year: Int? = nil,
-        imageName: String? = nil
+        imageName: String? = nil,
+        imageURL: URL? = nil
     ) {
         self.id = id
         self.type = type
         self.title = title
         self.year = year
         self.imageName = imageName
+        self.imageURL = imageURL
     }
 }
