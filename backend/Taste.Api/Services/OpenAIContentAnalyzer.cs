@@ -18,13 +18,65 @@ public sealed class OpenAIContentAnalyzer : IContentAnalyzer
         _configuration = configuration;
     }
 
-    public async Task<IReadOnlyList<ItemCandidateDto>> AnalyzeAsync(
+    
+    public async Task<IReadOnlyList<ItemCandidateDto>> AnalyzeImageAsync(
+        string? input,
+        byte[]? imageBytes,
+        string? imageContentType,
+        CancellationToken cancellationToken = default)
+    {
+        if (imageBytes is null || imageBytes.Length == 0)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentException(
+                    "Text or image must be provided."
+                );
+            }
+
+            return await AnalyzeAsync(
+                input,
+                cancellationToken
+            );
+        }
+
+        if (string.IsNullOrWhiteSpace(imageContentType))
+        {
+            throw new ArgumentException(
+                "Image content type is required."
+            );
+        }
+
+        var imageDataUrl =
+            $"data:{imageContentType};base64,{Convert.ToBase64String(imageBytes)}";
+
+
+        return await AnalyzeCoreAsync(
+            input,
+            imageDataUrl,
+            cancellationToken
+        );
+    }
+    
+    public Task<IReadOnlyList<ItemCandidateDto>> AnalyzeAsync(
         string input,
         CancellationToken cancellationToken = default)
     {
+        return AnalyzeCoreAsync(
+            input,
+            null,
+            cancellationToken
+        );
+    }
+
+    private async Task<IReadOnlyList<ItemCandidateDto>> AnalyzeCoreAsync(
+        string? input,
+        string? imageDataUrl,
+        CancellationToken cancellationToken)
+    {
         var apiKey = _configuration["OpenAI:ApiKey"]
-            ?? throw new InvalidOperationException(
-                "OpenAI API key is not configured.");
+                     ?? throw new InvalidOperationException(
+                         "OpenAI API key is not configured.");
 
         var model = _configuration["OpenAI:Model"]
             ?? throw new InvalidOperationException(
@@ -37,7 +89,37 @@ public sealed class OpenAIContentAnalyzer : IContentAnalyzer
 
         request.Headers.Authorization =
             new AuthenticationHeaderValue("Bearer", apiKey);
+        
+        object modelInput;
 
+        if (imageDataUrl is not null)
+        {
+            modelInput = new[]
+            {
+                new
+                {
+                    role = "user",
+                    content = new object[]
+                    {
+                        new
+                        {
+                            type = "input_text",
+                            text = input ?? "Identify the item shown in this image."
+                        },
+                        new
+                        {
+                            type = "input_image",
+                            image_url = imageDataUrl
+                        }
+                    }
+                }
+            };
+        }
+        else
+        {
+            modelInput = input ?? "";
+        }
+        
         request.Content = JsonContent.Create(new
         {
             model,
@@ -147,9 +229,69 @@ You analyze things a user wants to save to a personal wishlist.
     - If several candidates plausibly match,
       return multiple candidates for user confirmation.
 
-    - If no reliable match is found, use freeform.",
+    - If no reliable match is found, use freeform.
 
-            input,
+    8. Source URL and external URL.
+
+    sourceUrl is the original URL explicitly provided
+    by the user.
+
+    Never use a URL discovered through web search
+    as sourceUrl.
+
+    If the user provides only an image or a text
+    description without a URL, sourceUrl must be null.
+
+    details.externalUrl is a webpage representing
+    the actual item identified during analysis.
+
+    9. Product identification from images.
+
+    When the user provides a product image:
+
+    - Identify the product using its visible features,
+      including shape, color, material, design,
+      brand, and model when identifiable.
+
+    - Use web search to find a matching product page.
+
+    - Prefer the exact product when it can be identified.
+
+    - If the exact product cannot be identified,
+      search for visually and descriptively similar
+      products.
+
+    - Compare the available product information
+      with the uploaded image.
+
+    - Do not claim that a similar product is identical
+      to the product in the image.
+
+    - If a sufficiently matching product page is found,
+      put its URL in details.externalUrl.
+
+    - Never put a discovered product URL in sourceUrl.
+
+    - Never invent product URLs.
+
+    - Do not use search results pages as externalUrl.
+
+    - If no sufficiently matching product page is found,
+      set details.externalUrl to null.
+
+    - When multiple plausible products are found,
+      return multiple candidates for user confirmation,
+      up to the maximum of 5 candidates.
+
+    10. Other item types.
+
+    For movies, books, games, music, and places,
+    details.externalUrl may contain a relevant webpage
+    representing the identified item.
+
+    Keep sourceUrl and details.externalUrl independent.",
+
+            input = modelInput,
 
             text = new
             {

@@ -8,4 +8,11 @@ public interface IContentAnalyzer
         string input,
         CancellationToken cancellationToken = default
     );
+    
+    Task<IReadOnlyList<ItemCandidateDto>> AnalyzeImageAsync(
+        string? input,
+        byte[]? imageBytes,
+        string? imageContentType,
+        CancellationToken cancellationToken = default
+    );
 }
