@@ -244,24 +244,74 @@ struct AddItemView: View {
         }
     }
 
+
     @MainActor
     private func analyzeInput() async {
-        guard let importInput = ImportInput(rawValue: input) else {
+
+        let trimmedInput = input.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+
+        // Require either text or an image
+        guard !trimmedInput.isEmpty ||
+              selectedImageData != nil else {
             return
         }
 
         isAnalyzing = true
         errorMessage = nil
 
-        do {
-            let candidates = try await analyzer.analyze(importInput)
-
-            candidate = candidates.first
-        } catch {
-            print("Analyze error:", error)
-            errorMessage = "Could not analyze this item: \(error.localizedDescription)"
+        defer {
+            isAnalyzing = false
         }
 
-        isAnalyzing = false
+        do {
+            let candidates: [ItemCandidate]
+
+            if let imageData = selectedImageData {
+
+                // Analyze image with optional text or URL
+                candidates = try await analyzer.analyzeImage(
+                    input: trimmedInput,
+                    imageData: imageData
+                )
+
+            } else {
+
+                // Analyze text or URL without an image
+                guard let importInput = ImportInput(
+                    rawValue: trimmedInput
+                ) else {
+                    errorMessage = "Please enter a valid description or URL."
+                    return
+                }
+
+                candidates = try await analyzer.analyze(
+                    importInput
+                )
+            }
+
+
+            if let firstCandidate = candidates.first {
+
+                candidate = ItemCandidate(
+                    type: firstCandidate.type,
+                    title: firstCandidate.title,
+                    description: firstCandidate.description,
+                    sourceURL: firstCandidate.sourceURL,
+                    details: firstCandidate.details,
+                    originalImageData: selectedImageData
+                )
+
+            } else {
+                errorMessage = "No matching items found."
+            }
+
+        } catch {
+            print("Analyze error:", error)
+
+            errorMessage =
+                "Could not analyze this item: \(error.localizedDescription)"
+        }
     }
 }

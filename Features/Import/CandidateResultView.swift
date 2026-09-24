@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+#if os(macOS)
+import AppKit
+#elseif os(iOS)
+import UIKit
+#endif
+
 struct CandidateResultView: View {
     let candidate: ItemCandidate
     let onConfirm: () -> Void
@@ -24,9 +30,20 @@ struct CandidateResultView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
-                if let imageURL = candidate.details?.imageURL {
+                
+                if candidate.type == .product,
+                   let imageData = candidate.originalImageData {
+
+                    // For products, prefer the original user image
+                    OriginalImageView(imageData: imageData)
+
+                } else if let imageURL = candidate.details?.imageURL {
+
+                    // For movies, books, games and other items,
+                    // prefer the identified catalog image
                     AsyncImage(url: imageURL) { phase in
                         switch phase {
+
                         case .empty:
                             ProgressView()
                                 .frame(height: 220)
@@ -36,18 +53,36 @@ struct CandidateResultView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(maxWidth: .infinity, maxHeight: 220)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 12)
+                                )
 
                         case .failure:
-                            Image(systemName: "photo")
-                                .font(.largeTitle)
-                                .foregroundStyle(.secondary)
-                                .frame(height: 120)
+                            if let imageData = candidate.originalImageData {
+                                OriginalImageView(imageData: imageData)
+                            } else {
+                                Image(systemName: "photo")
+                                    .font(.largeTitle)
+                                    .foregroundStyle(.secondary)
+                                    .frame(height: 120)
+                            }
 
                         @unknown default:
                             EmptyView()
                         }
                     }
+
+                } else if let imageData = candidate.originalImageData {
+
+                    // Fallback when no catalog image was found
+                    OriginalImageView(imageData: imageData)
+
+                } else {
+
+                    Image(systemName: "photo")
+                        .font(.largeTitle)
+                        .foregroundStyle(.secondary)
+                        .frame(height: 120)
                 }
                 
                 if let description = candidate.description {
@@ -94,5 +129,31 @@ struct CandidateResultView: View {
             .buttonStyle(.borderedProminent)
         }
         .padding(AppSpacing.lg)
+    }
+    
+    private struct OriginalImageView: View {
+
+        let imageData: Data
+
+        var body: some View {
+
+            #if os(macOS)
+            if let image = NSImage(data: imageData) {
+                Image(nsImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity, maxHeight: 220)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            #elseif os(iOS)
+            if let image = UIImage(data: imageData) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity, maxHeight: 220)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            #endif
+        }
     }
 }

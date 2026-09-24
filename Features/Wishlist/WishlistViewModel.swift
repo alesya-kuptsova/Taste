@@ -11,6 +11,17 @@ import Observation
 @Observable
 final class WishlistViewModel {
 
+    private let storageURL: URL = {
+        let directory = FileManager.default.urls(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask
+        )[0]
+
+        return directory
+            .appendingPathComponent("Taste", isDirectory: true)
+            .appendingPathComponent("wishlist.json")
+    }()
+
     //test
     var items: [WishlistItem] = [
         WishlistItem(
@@ -39,14 +50,61 @@ final class WishlistViewModel {
         )
     ]
 
+    init() {
+        loadItems()
+    }
+
     func addItem(from candidate: ItemCandidate) {
         let item = WishlistItem(
             type: candidate.type,
             title: candidate.title,
             year: candidate.details?.year,
-            imageURL: candidate.details?.imageURL
+            imageURL: candidate.details?.imageURL,
+            originalImageData: candidate.originalImageData
         )
 
         items.insert(item, at: 0)
+        saveItems()
+    }
+
+    private func saveItems() {
+        do {
+            let directory = storageURL.deletingLastPathComponent()
+
+            try FileManager.default.createDirectory(
+                at: directory,
+                withIntermediateDirectories: true
+            )
+
+            let data = try JSONEncoder().encode(items)
+
+            try data.write(
+                to: storageURL,
+                options: .atomic
+            )
+
+        } catch {
+            print("Failed to save wishlist:", error)
+        }
+    }
+
+    private func loadItems() {
+        guard FileManager.default.fileExists(
+            atPath: storageURL.path
+        ) else {
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: storageURL)
+
+            items = try JSONDecoder().decode(
+                [WishlistItem].self,
+                from: data
+            )
+
+        } catch {
+            print("Failed to load wishlist:", error)
+        }
     }
 }

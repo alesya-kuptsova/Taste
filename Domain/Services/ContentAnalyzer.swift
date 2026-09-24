@@ -9,4 +9,5 @@ import Foundation
 
 protocol ContentAnalyzer {
     func analyze(_ input: ImportInput) async throws -> [ItemCandidate]
+    func analyzeImage(input: String, imageData: Data) async throws -> [ItemCandidate]
 }

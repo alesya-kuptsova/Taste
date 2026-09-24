@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+#if os(macOS)
+import AppKit
+#elseif os(iOS)
+import UIKit
+#endif
+
 struct MovieCardView: View {
 
     let item: WishlistItem
@@ -34,41 +40,86 @@ struct MovieCardView: View {
 
     @ViewBuilder
     private var poster: some View {
-        if let imageURL = item.imageURL {
+
+        // Products added from an image:
+        // prefer the original user photo.
+        if item.type == .product,
+           let imageData = item.originalImageData {
+
+            originalImageView(imageData)
+
+        } else if let imageURL = item.imageURL {
+
             AsyncImage(url: imageURL) { phase in
                 switch phase {
+
                 case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
+                    posterStyle(image)
+
+                case .empty:
+                    ProgressView()
                         .frame(
                             width: AppSize.posterWidth,
                             height: AppSize.posterHeight
                         )
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: AppRadius.card)
-                        )
 
-                default:
+                case .failure:
+                    if let imageData = item.originalImageData {
+                        originalImageView(imageData)
+                    } else {
+                        placeholder
+                    }
+
+                @unknown default:
                     placeholder
                 }
             }
 
         } else if let imageName = item.imageName {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(
-                    width: AppSize.posterWidth,
-                    height: AppSize.posterHeight
-                )
-                .clipShape(
-                    RoundedRectangle(cornerRadius: AppRadius.card)
-                )
 
+            posterStyle(Image(imageName))
+
+        } else if let imageData = item.originalImageData {
+
+            originalImageView(imageData)
+
+        } else {
+
+            placeholder
+        }
+    }
+    
+    
+    private func posterStyle(_ image: Image) -> some View {
+        image
+            .resizable()
+            .scaledToFill()
+            .frame(
+                width: AppSize.posterWidth,
+                height: AppSize.posterHeight
+            )
+            .clipped()
+            .clipShape(
+                RoundedRectangle(cornerRadius: AppRadius.card)
+            )
+    }
+
+    @ViewBuilder
+    private func originalImageView(_ data: Data) -> some View {
+
+        #if os(macOS)
+        if let image = NSImage(data: data) {
+            posterStyle(Image(nsImage: image))
         } else {
             placeholder
         }
+        #elseif os(iOS)
+        if let image = UIImage(data: data) {
+            posterStyle(Image(uiImage: image))
+        } else {
+            placeholder
+        }
+        #endif
     }
 
     private var placeholder: some View {

@@ -22,6 +22,14 @@ final class MockContentAnalyzer: ContentAnalyzer {
             ]
         }
     }
+    
+    
+    func analyzeImage(
+        input: String,
+        imageData: Data
+    ) async throws -> [ItemCandidate] {
+        return analyzeText(input)
+    }
 
     private func analyzeText(_ text: String) -> [ItemCandidate] {
         let normalized = text.lowercased()

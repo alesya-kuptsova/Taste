@@ -17,7 +17,7 @@ enum WishlistItemType: String, Codable {
     case freeform
 }
 
-struct WishlistItem: Identifiable, Hashable {
+struct WishlistItem: Identifiable, Hashable, Codable {
     let id: UUID
     let type: WishlistItemType
     let title: String
@@ -25,13 +25,17 @@ struct WishlistItem: Identifiable, Hashable {
     let imageName: String?
     let imageURL: URL?
 
+    // Original image attached by the user
+    let originalImageData: Data?
+
     init(
         id: UUID = UUID(),
         type: WishlistItemType,
         title: String,
         year: Int? = nil,
         imageName: String? = nil,
-        imageURL: URL? = nil
+        imageURL: URL? = nil,
+        originalImageData: Data? = nil
     ) {
         self.id = id
         self.type = type
@@ -39,5 +43,6 @@ struct WishlistItem: Identifiable, Hashable {
         self.year = year
         self.imageName = imageName
         self.imageURL = imageURL
+        self.originalImageData = originalImageData
     }
 }
