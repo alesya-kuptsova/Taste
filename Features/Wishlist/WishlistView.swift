@@ -86,9 +86,25 @@ struct WishlistView: View {
 
     private var recentlyAdded: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
+            HStack {
+                Text("Recently Added")
+                    .font(.title2.bold())
 
-            Text("Recently Added")
-                .font(.title2.bold())
+                Spacer()
+
+                NavigationLink {
+                    AllWishlistView(items: viewModel.items)
+                } label: {
+                    HStack(spacing: AppSpacing.xs) {
+                        Text("See All")
+
+                        Image(systemName: "arrow.right")
+                    }
+                    .font(.subheadline)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.blue)
+            }
 
             ForEach(viewModel.items.prefix(3)) { item in
                 HStack(spacing: AppSpacing.md) {
