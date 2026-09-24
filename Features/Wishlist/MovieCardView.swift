@@ -135,4 +135,83 @@ struct MovieCardView: View {
                     .foregroundStyle(.secondary)
             }
     }
+
+    @ViewBuilder
+    static func thumbnail(for item: WishlistItem) -> some View {
+        WishlistThumbnailView(item: item)
+    }
+}
+private struct WishlistThumbnailView: View {
+
+    let item: WishlistItem
+
+    var body: some View {
+        Group {
+            if item.type == .product,
+               let data = item.originalImageData {
+                originalImage(data)
+
+            } else if let imageURL = item.imageURL {
+                AsyncImage(url: imageURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+
+                    case .failure:
+                        if let data = item.originalImageData {
+                            originalImage(data)
+                        } else {
+                            placeholder
+                        }
+
+                    default:
+                        placeholder
+                    }
+                }
+
+            } else if let imageName = item.imageName {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+
+            } else if let data = item.originalImageData {
+                originalImage(data)
+
+            } else {
+                placeholder
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func originalImage(_ data: Data) -> some View {
+        #if os(macOS)
+        if let image = NSImage(data: data) {
+            Image(nsImage: image)
+                .resizable()
+                .scaledToFill()
+        } else {
+            placeholder
+        }
+        #elseif os(iOS)
+        if let image = UIImage(data: data) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+        } else {
+            placeholder
+        }
+        #endif
+    }
+
+    private var placeholder: some View {
+        Rectangle()
+            .fill(AppColors.cardBackground)
+            .overlay {
+                Image(systemName: "photo")
+                    .foregroundStyle(.secondary)
+            }
+    }
 }

@@ -67,13 +67,15 @@ struct WishlistView: View {
                 .padding(.horizontal, AppSpacing.md)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: AppSpacing.md) {
+                LazyHStack(alignment: .top, spacing: AppSpacing.md) {
                     ForEach(viewModel.items) { item in
                         MovieCardView(item: item)
                     }
                 }
                 .padding(.horizontal, AppSpacing.md)
+                .padding(.bottom, AppSpacing.sm)
             }
+            .frame(height: AppSize.posterHeight + 75)
         }
     }
 
@@ -86,22 +88,25 @@ struct WishlistView: View {
             ForEach(viewModel.items.prefix(3)) { item in
                 HStack(spacing: AppSpacing.md) {
 
-                    if let imageName = item.imageName {
-                        Image(imageName)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 52, height: 78)
-                            .clipShape(
-                                RoundedRectangle(cornerRadius: AppRadius.small)
-                            )
-                    }
+                    MovieCardView.thumbnail(for: item)
+                        .frame(width: 52, height: 78)
+                        .clipped()
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: AppRadius.small)
+                        )
 
                     VStack(alignment: .leading, spacing: AppSpacing.xs) {
+
                         Text(item.title)
                             .font(.headline)
+                            .lineLimit(1)
 
                         if let year = item.year {
                             Text(String(year))
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Text(item.type.rawValue.capitalized)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
