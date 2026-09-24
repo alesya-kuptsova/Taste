@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F90F3FDB3065BDA700749640 /* WishlistItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90F3FDA3065BDA400749640 /* WishlistItemDetailView.swift */; };
 		F9B097FD3053602400A6DCB9 /* ItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */; };
 		F9D7CA3F30439E270076636B /* TasteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D7CA3E30439E270076636B /* TasteApp.swift */; };
 		F9EE67503044842E0023EC2B /* WishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE674F304480F30023EC2B /* WishlistView.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F90F3FDA3065BDA400749640 /* WishlistItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistItemDetailView.swift; sourceTree = "<group>"; };
 		F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetails.swift; sourceTree = "<group>"; };
 		F9D7CA3B30439E270076636B /* Taste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D7CA3E30439E270076636B /* TasteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasteApp.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		F9D7CA763043A5290076636B /* ItemDetails */ = {
 			isa = PBXGroup;
 			children = (
+				F90F3FDA3065BDA400749640 /* WishlistItemDetailView.swift */,
 			);
 			path = ItemDetails;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				F9EE676830461A750023EC2B /* CandidateResultView.swift in Sources */,
 				F9EE67593044857D0023EC2B /* WishlistItem.swift in Sources */,
 				F9D7CA3F30439E270076636B /* TasteApp.swift in Sources */,
+				F90F3FDB3065BDA700749640 /* WishlistItemDetailView.swift in Sources */,
 				F9B097FD3053602400A6DCB9 /* ItemDetails.swift in Sources */,
 				F9EE6753304484F00023EC2B /* MovieCardView.swift in Sources */,
 				F9EE675E3045CD8F0023EC2B /* ImportInput.swift in Sources */,

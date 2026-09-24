@@ -58,13 +58,13 @@ final class WishlistViewModel {
         let item = WishlistItem(
             type: candidate.type,
             title: candidate.title,
+            description: candidate.description,
             year: candidate.details?.year,
             imageURL: candidate.details?.imageURL,
             originalImageData: candidate.originalImageData
         )
 
         items.insert(item, at: 0)
-        saveItems()
     }
 
     private func saveItems() {

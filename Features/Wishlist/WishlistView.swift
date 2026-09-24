@@ -69,7 +69,12 @@ struct WishlistView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: AppSpacing.md) {
                     ForEach(viewModel.items) { item in
-                        MovieCardView(item: item)
+                        NavigationLink {
+                            WishlistItemDetailView(item: item)
+                        } label: {
+                            MovieCardView(item: item)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, AppSpacing.md)

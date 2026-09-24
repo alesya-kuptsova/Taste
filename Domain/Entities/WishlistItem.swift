@@ -21,6 +21,7 @@ struct WishlistItem: Identifiable, Hashable, Codable {
     let id: UUID
     let type: WishlistItemType
     let title: String
+    let description: String?
     let year: Int?
     let imageName: String?
     let imageURL: URL?
@@ -32,6 +33,7 @@ struct WishlistItem: Identifiable, Hashable, Codable {
         id: UUID = UUID(),
         type: WishlistItemType,
         title: String,
+        description: String? = nil,
         year: Int? = nil,
         imageName: String? = nil,
         imageURL: URL? = nil,
@@ -40,6 +42,7 @@ struct WishlistItem: Identifiable, Hashable, Codable {
         self.id = id
         self.type = type
         self.title = title
+        self.description = description
         self.year = year
         self.imageName = imageName
         self.imageURL = imageURL
