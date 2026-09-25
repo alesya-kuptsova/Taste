@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F90F3FDB3065BDA700749640 /* WishlistItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90F3FDA3065BDA400749640 /* WishlistItemDetailView.swift */; };
 		F90F3FDD3065EA4200749640 /* AllWishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90F3FDC3065EA3E00749640 /* AllWishlistView.swift */; };
+		F90F3FDF3065FB3B00749640 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = F90F3FDE3065FB2A00749640 /* README.md */; };
 		F9B097FD3053602400A6DCB9 /* ItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */; };
 		F9D7CA3F30439E270076636B /* TasteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D7CA3E30439E270076636B /* TasteApp.swift */; };
 		F9EE67503044842E0023EC2B /* WishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EE674F304480F30023EC2B /* WishlistView.swift */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		F90F3FDA3065BDA400749640 /* WishlistItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistItemDetailView.swift; sourceTree = "<group>"; };
 		F90F3FDC3065EA3E00749640 /* AllWishlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllWishlistView.swift; sourceTree = "<group>"; };
+		F90F3FDE3065FB2A00749640 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = README.md; sourceTree = "<group>"; };
 		F9B097FC3053601E00A6DCB9 /* ItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetails.swift; sourceTree = "<group>"; };
 		F9D7CA3B30439E270076636B /* Taste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D7CA3E30439E270076636B /* TasteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasteApp.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		F9D7CA3230439E260076636B = {
 			isa = PBXGroup;
 			children = (
+				F90F3FDE3065FB2A00749640 /* README.md */,
 				F9D7CA6B3043A4160076636B /* Platform */,
 				F9D7CA6A3043A4020076636B /* Features */,
 				F9D7CA693043A3F10076636B /* Data */,
@@ -454,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90F3FDF3065FB3B00749640 /* README.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
