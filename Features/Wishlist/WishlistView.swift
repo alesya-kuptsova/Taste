@@ -108,12 +108,13 @@ struct WishlistView: View {
 
             ForEach(viewModel.items.prefix(3)) { item in
                 HStack(spacing: AppSpacing.md) {
-
-                    MovieCardView.thumbnail(for: item)
-                        .frame(width: 52, height: 78)
-                        .clipped()
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: AppRadius.small)
+                    Image(systemName: iconName(for: item.type))
+                        .font(.title2)
+                        .foregroundStyle(.secondary)
+                        .frame(width: 52, height: 52)
+                        .background(
+                            AppColors.cardBackground,
+                            in: RoundedRectangle(cornerRadius: AppRadius.small)
                         )
 
                     VStack(alignment: .leading, spacing: AppSpacing.xs) {
@@ -138,5 +139,30 @@ struct WishlistView: View {
             }
         }
         .padding(.horizontal, AppSpacing.md)
+    }
+
+    private func iconName(for type: WishlistItemType) -> String {
+        switch type {
+        case .movie:
+            return "film"
+
+        case .book:
+            return "book.closed"
+
+        case .game:
+            return "gamecontroller"
+
+        case .music:
+            return "music.note"
+
+        case .place:
+            return "mappin.and.ellipse"
+
+        case .product:
+            return "bag"
+
+        case .freeform:
+            return "heart"
+        }
     }
 }
