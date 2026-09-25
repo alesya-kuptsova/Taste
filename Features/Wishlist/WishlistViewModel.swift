@@ -65,6 +65,7 @@ final class WishlistViewModel {
         )
 
         items.insert(item, at: 0)
+        saveItems()
     }
 
     private func saveItems() {
