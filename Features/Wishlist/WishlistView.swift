@@ -107,35 +107,39 @@ struct WishlistView: View {
             }
 
             ForEach(viewModel.items.prefix(3)) { item in
-                HStack(spacing: AppSpacing.md) {
-                    Image(systemName: iconName(for: item.type))
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 52, height: 52)
-                        .background(
-                            AppColors.cardBackground,
-                            in: RoundedRectangle(cornerRadius: AppRadius.small)
-                        )
+                NavigationLink {
+                    WishlistItemDetailView(item: item)
+                } label: {
+                    HStack(spacing: AppSpacing.md) {
+                        Image(systemName: iconName(for: item.type))
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                            .frame(width: 52, height: 52)
+                            .background(
+                                AppColors.cardBackground,
+                                in: RoundedRectangle(cornerRadius: AppRadius.small)
+                            )
 
-                    VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                            Text(item.title)
+                                .font(.headline)
+                                .lineLimit(1)
 
-                        Text(item.title)
-                            .font(.headline)
-                            .lineLimit(1)
-
-                        if let year = item.year {
-                            Text(String(year))
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        } else {
-                            Text(item.type.rawValue.capitalized)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            if let year = item.year {
+                                Text(String(year))
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text(item.type.rawValue.capitalized)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
-                    }
 
-                    Spacer()
+                        Spacer()
+                    }
                 }
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, AppSpacing.md)
